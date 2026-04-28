@@ -1,33 +1,34 @@
 name: Students file CI/CD
 
 on:
- push:
-  branches: [main]
-
-pull_request:
-  branches: [main]
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
- check-students-file:
-  runs-on: ubuntu-latest
+  check-students-file:
+    runs-on: ubuntu-latest
 
-  steps:
-   - name: Lejupieladet repozitorija kodu
-     uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-- name: Parbaudit, vai eksiste Students.md
-run: |
-  if [ ! -f Students.md ]; then
-  echo "Kļūda: fails Students.md nav atrasts!"
-  exit 1
- fi
+      - name: Check if Students.md exists
+        run: |
+          if [ ! -f Students.md ]; then
+            echo "Error: Students.md file not found"
+            exit 1
+          fi
 
- - name: Paradit Students.md saturu
-   run: cat Students.md
+      - name: Show Students.md content
+        run: cat Students.md
 
- - name: Testa solis
-   run: echo "Parbaude veiksmigi izpildita"
+      - name: Test step
+        run: echo "Check completed successfully"
 
- - name: Deploy (demo solis)
-  if: success()
-  run: echo "Deploy veiksmīgs"
+      - name: Deploy demo
+        if: success()
+        run: echo "Deploy successful"
